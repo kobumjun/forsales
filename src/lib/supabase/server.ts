@@ -24,7 +24,12 @@ export async function createClient(response?: NextResponse) {
               return;
             }
 
-            cookieStore.set(name, value, options as any);
+            try {
+              cookieStore.set(name, value, options as any);
+            } catch {
+              // Next.js 제한상 서버 컴포넌트에서는 쿠키 수정이 불가합니다.
+              // 여기서는 쿠키 쓰기 실패를 무시합니다.
+            }
           });
         },
       },
