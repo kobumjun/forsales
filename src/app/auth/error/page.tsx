@@ -1,20 +1,15 @@
-import Link from "next/link";
+import { AuthErrorClient } from "./AuthErrorClient";
 
-export default function AuthErrorPage() {
+export default function AuthErrorPage({
+  searchParams,
+}: {
+  searchParams?: { error?: string; stack?: string };
+}) {
+  const errorMessage =
+    searchParams?.error ?? "로그인 중 오류가 발생했습니다.";
+  const stack = searchParams?.stack;
+
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-slate-50 px-4">
-      <h1 className="text-xl font-semibold text-slate-900">
-        로그인 중 오류가 발생했습니다
-      </h1>
-      <p className="mt-2 text-slate-600">
-        Google 로그인 설정을 확인해 주세요.
-      </p>
-      <Link
-        href="/"
-        className="mt-6 rounded-md bg-slate-900 px-4 py-2 text-sm text-white hover:bg-slate-800"
-      >
-        홈으로 돌아가기
-      </Link>
-    </div>
+    <AuthErrorClient errorMessage={errorMessage} stack={stack} />
   );
 }
